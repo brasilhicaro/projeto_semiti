@@ -1,0 +1,26 @@
+  version: '3.8'
+
+services:
+
+  postgres:
+    image: postgres:16
+    restart: always
+    container_name: db_test
+    environment:
+      POSTGRES_PASSWORD: loren
+      POSTGRES_DB: projeto_vaga_backend
+      POSTGRES_USER: loren
+    ports:
+      - "5432:5432"
+
+  backend:
+    build: .
+    container_name: backend
+    command: python manage.py runserver
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+      
